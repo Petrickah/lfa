@@ -6,6 +6,5 @@ int main(int argc, char* argv[])
     std::ifstream states("var/states.txt");
     ParserClasses::Parser myParser;
     myParser.readStates(states);
-    //myMainFunctions::getAutomata(fin);
     return 0;
 }

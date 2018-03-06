@@ -15,13 +15,13 @@ void ParserClasses::Parser::readStates(std::ifstream& in) {
 
     #define readVectorStates(vect) \
         int k=0; \
-            while(row[k] != '{') k++; \
-            char* token = strtok(&row[k], "{, }"); \
-            while(token != nullptr) \
-            { \
-                (vect).push_back(State(atoi(token))); \
-                token = strtok(nullptr, "{, }"); \
-            } \
+        while(row[k] != '{') k++; \
+        char* token = strtok(&row[k], "{, }"); \
+        while(token != nullptr) \
+        { \
+            (vect).push_back(State(atoi(token))); \
+            token = strtok(nullptr, "{, }"); \
+        } \
 
     while(!in.eof()) {
         in.getline(row, 250);
