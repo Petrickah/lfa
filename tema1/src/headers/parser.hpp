@@ -29,5 +29,6 @@ public:
     Parser() { this->firstState = new State(); }
     Parser(int intFirstState) { this->firstState = new State(intFirstState); }
     Parser(State firstState) { this->firstState = new State(firstState); }
+    ~Parser() { delete firstState; }
 };
 #endif // LFA_TEMA1_PARSER_H_
