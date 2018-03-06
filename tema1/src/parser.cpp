@@ -40,12 +40,6 @@ void ParserClasses::Parser::readStates(std::ifstream& in) {
             this->nrStates = atoi(row);
         }
     }
-
-    for(auto state: vStates)
-        std::cout<<state.getState()<<" ";
-    for(auto state: vFinalStates)
-        std::cout<<state.getState()<<" ";
-    std::cout<<firstState->getState()<<" ";
 }
 void ParserClasses::Parser::readAlphabet(std::ifstream& in) {
     char row[250];

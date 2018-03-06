@@ -38,6 +38,11 @@ namespace ParserClasses {
             this->nrStates = nrStates; initTransMatrix(this->nrStates);
         }
         Parser(State firstState) { this->firstState = new State(firstState); }
+        Parser(std::ifstream& states, std::ifstream& alphabet) {
+            this->readStates(states);
+            this->readAlphabet(alphabet);
+            initTransMatrix(this->nrStates);
+        }
         ~Parser() { delete firstState; }
 
         //Metoda specifica starilor
