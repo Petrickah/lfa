@@ -1,0 +1,4 @@
+#ifndef LFA_TEMA1_PARSER_H_
+#define LFA_TEMA1_PARSER_H_
+
+#endif // LFA_TEMA1_PARSER_H_
