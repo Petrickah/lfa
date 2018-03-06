@@ -22,12 +22,18 @@ public:
 };
 
 class Parser {
+    int nrStates; State *firstState;
     std::vector<State> vStates, vFinalStates;
     std::vector<Letter> vAlphabet;
-    State *firstState;
+    std::vector< std::vector<Letter> > *transMatrix;
+
+    void initTransMatrix(int nrStates);
 public:
     Parser() { this->firstState = new State(); }
-    Parser(int intFirstState) { this->firstState = new State(intFirstState); }
+    Parser(int intFirstState, int nrStates) { 
+        this->firstState = new State(intFirstState); 
+        this->nrStates = nrStates; initTransMatrix(this->nrStates);
+    }
     Parser(State firstState) { this->firstState = new State(firstState); }
     ~Parser() { delete firstState; }
 };
