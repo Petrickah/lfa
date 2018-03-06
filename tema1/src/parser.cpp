@@ -47,3 +47,16 @@ void ParserClasses::Parser::readStates(std::ifstream& in) {
         std::cout<<state.getState()<<" ";
     std::cout<<firstState->getState()<<" ";
 }
+void ParserClasses::Parser::readAlphabet(std::ifstream& in) {
+    char row[250];
+    while(!in.eof())
+    {
+        in.getline(row, 250);
+        char* token = strtok(row, ", ");
+        while(token != nullptr)
+        {
+            this->vAlphabet.push_back(new Letter(token));
+            token = strtok(nullptr, ", ");
+        }
+    }
+}

@@ -40,8 +40,10 @@ namespace ParserClasses {
         Parser(State firstState) { this->firstState = new State(firstState); }
         ~Parser() { delete firstState; }
 
-        //Metode specifice starilor
+        //Metoda specifica starilor
         void readStates(std::ifstream& in);
+        //Metoda specifica alfabetului
+        void readAlphabet(std::ifstream& in);
     };
 }
 #endif // LFA_TEMA1_PARSER_H_
