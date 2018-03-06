@@ -3,7 +3,9 @@
 int main(int argc, char* argv[])
 {
     std::cout<<"Hello, world!"<<std::endl;
-    std::ifstream fin("var/automat.txt");
-    myMainFunctions::getAutomata(fin);
+    std::ifstream states("var/states.txt");
+    ParserClasses::Parser myParser;
+    myParser.readStates(states);
+    //myMainFunctions::getAutomata(fin);
     return 0;
 }

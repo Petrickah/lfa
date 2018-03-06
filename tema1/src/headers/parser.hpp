@@ -1,6 +1,8 @@
 #ifndef LFA_TEMA1_PARSER_H_
 #define LFA_TEMA1_PARSER_H_
 
+#include <fstream>
+#include <iostream>
 #include <vector>
 #include <string.h>
 
@@ -37,6 +39,9 @@ namespace ParserClasses {
         }
         Parser(State firstState) { this->firstState = new State(firstState); }
         ~Parser() { delete firstState; }
+
+        //Metode specifice starilor
+        void readStates(std::ifstream& in);
     };
 }
 #endif // LFA_TEMA1_PARSER_H_
