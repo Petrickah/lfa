@@ -1,14 +1,13 @@
 #include "headers/parser.hpp"
 
 void ParserClasses::Parser::initTransMatrix(int nrStates) {
-    this->transMatrix = 
-        new std::vector< std::vector< Letter > > (
-            nrStates + 1, 
-            std::vector< Letter >(
+    this->transMatrix = new std::vector<Letter*> [nrStates + 1];
+    for(int i=0; i<=nrStates; i++)
+        this->transMatrix[i] = 
+            std::vector<Letter*> (
                 nrStates + 1,
-                Letter("~")
-            )
-        );
+                new Letter("~")
+            );
 }
 void ParserClasses::Parser::readStates(std::ifstream& in) {
     char row[250];
@@ -53,4 +52,31 @@ void ParserClasses::Parser::readAlphabet(std::ifstream& in) {
             token = strtok(nullptr, ", ");
         }
     }
+}
+void ParserClasses::Parser::readAutomata(std::ifstream& in) {
+    int x, y; char token[20];
+    while(!in.eof())
+    {
+        in>>x>>y>>token;
+        this->transMatrix[x][y] = new Letter(token);
+    }
+}
+ParserClasses::State* ParserClasses::Parser::nextState(
+    ParserClasses::State* currState, ParserClasses::Letter token) 
+{
+    auto currRow = this->transMatrix[currState->getState()];
+    int k = -1;
+    for(auto letter: currRow) {
+        k++;
+        if(strcmp(letter->getLetter(), token.getLetter()) == 0)
+            return new ParserClasses::State(k);
+    }
+    return nullptr;
+}
+bool ParserClasses::Parser::isFinalState(ParserClasses::State* myState){
+    for(auto state: this->vFinalStates)
+    {
+        if(state.getState() == myState->getState()) return true;
+    }
+    return false;
 }

@@ -28,7 +28,7 @@ namespace ParserClasses {
         int nrStates; State *firstState;
         std::vector<State> vStates, vFinalStates;
         std::vector<Letter*> vAlphabet;
-        std::vector< std::vector<Letter> > *transMatrix;
+        std::vector<Letter*> *transMatrix;
 
         void initTransMatrix(int nrStates);
     public:
@@ -44,11 +44,17 @@ namespace ParserClasses {
             initTransMatrix(this->nrStates);
         }
         ~Parser() { delete firstState; }
+        State* getFirstState() { return firstState; }
 
         //Metoda specifica starilor
         void readStates(std::ifstream& in);
         //Metoda specifica alfabetului
         void readAlphabet(std::ifstream& in);
+        //Metoda specifica automatului
+        void readAutomata(std::ifstream& in);
+
+        State* nextState(State* currState, Letter token);
+        bool isFinalState(State* myState);
     };
 }
 #endif // LFA_TEMA1_PARSER_H_
