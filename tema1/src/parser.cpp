@@ -6,7 +6,7 @@ void ParserClasses::Parser::initTransMatrix(int nrStates) {
         this->transMatrix[i] = 
             std::vector<Letter*> (
                 nrStates + 1,
-                new Letter("~")
+                new Letter("")
             );
 }
 void ParserClasses::Parser::readStates(std::ifstream& in) {
@@ -70,6 +70,8 @@ ParserClasses::State* ParserClasses::Parser::nextState(
         k++;
         if(strcmp(letter->getLetter(), token.getLetter()) == 0)
             return new ParserClasses::State(k);
+        else if(letter->getLetter()[0] == '~')
+            return currState;
     }
     return nullptr;
 }
@@ -77,6 +79,13 @@ bool ParserClasses::Parser::isFinalState(ParserClasses::State* myState){
     for(auto state: this->vFinalStates)
     {
         if(state.getState() == myState->getState()) return true;
+    }
+    return false;
+}
+bool ParserClasses::Parser::isValidToken(char* token){
+    for(auto letter: this->vAlphabet)
+    {
+        if(strcmp(letter->getLetter(), token) == 0) return true;
     }
     return false;
 }

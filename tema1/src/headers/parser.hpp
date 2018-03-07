@@ -55,6 +55,7 @@ namespace ParserClasses {
 
         State* nextState(State* currState, Letter token);
         bool isFinalState(State* myState);
+        bool isValidToken(char* token);
     };
 }
 #endif // LFA_TEMA1_PARSER_H_

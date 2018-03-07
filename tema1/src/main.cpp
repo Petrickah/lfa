@@ -3,13 +3,22 @@
 bool esteCuvantValid(ParserClasses::Parser& myDFA, ParserClasses::State* currState, char* word)
 {
     while(word[0] != '\0') {
-        char token[1] = {word[0]};
-        strcpy(word, word+1);
-        if(myDFA.isFinalState(currState)) return true;
-        currState = myDFA.nextState(
-            currState,
-            ParserClasses::Letter(token)
-        );
+        char token[2] = {word[0], '\0'};
+        if(strcmp(word, "~") == 0 && myDFA.isFinalState(currState)) return true;
+        else {
+            if(myDFA.isValidToken(token))
+            {
+                currState = myDFA.nextState(
+                    currState,
+                    ParserClasses::Letter(token)
+                );
+            } else {
+                std::cout<<"Invalid token!"<<std::endl;
+                return false;
+            }
+            strcpy(word, word+1);
+            if(myDFA.isFinalState(currState) && strcmp(word, "") == 0) return true;
+        }
     }
     if(currState == nullptr) return false;
 }
@@ -24,7 +33,6 @@ int main(int argc, char* argv[])
         std::ifstream automat("var/automat.txt");
         ParserClasses::Parser myParser(states, alphabet);
         myParser.readAutomata(automat);
-
         if(esteCuvantValid(myParser, myParser.getFirstState(), argv[1])){
             std::cout<<"Cuvant acceptat!\n";
         }
