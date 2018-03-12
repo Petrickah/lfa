@@ -28,9 +28,11 @@ namespace ParserClasses {
         int nrStates; State *firstState;
         std::vector<State> vStates, vFinalStates;
         std::vector<Letter*> vAlphabet;
-        std::vector<Letter*> *transMatrix;
+        
+        std::vector<State*> *transMatrix;
 
         void initTransMatrix(int nrStates);
+        int getIndexOfLetter(char* token);
     public:
         Parser() { this->firstState = new State(); }
         Parser(int intFirstState, int nrStates) { 
@@ -53,7 +55,7 @@ namespace ParserClasses {
         //Metoda specifica automatului
         void readAutomata(std::ifstream& in);
 
-        State* nextState(State* currState, Letter token);
+        State* nextState(State* currState, Letter* token);
         bool isFinalState(State* myState);
         bool isValidToken(char* token);
     };
