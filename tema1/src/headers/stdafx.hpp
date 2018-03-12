@@ -9,8 +9,4 @@
 
 #include "parser.hpp"
 
-namespace myMainFunctions {
-    ParserClasses::Parser* getAutomata(std::ifstream& in);
-}
-
 #endif // LFA_TEMA1_STDAFX_H_
