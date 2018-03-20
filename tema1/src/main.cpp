@@ -16,11 +16,10 @@ bool esteCuvantValid(ParserClasses::Parser& myDFA, ParserClasses::State* currSta
                 std::cout<<"Invalid token!"<<std::endl;
                 return false;
             }
-            strcpy(word, word+1);
+            word = word+1;
             if(myDFA.isFinalState(currState) && strcmp(word, "") == 0) return true;
         }
     }
-    if(currState == nullptr) return false;
 }
 
 int main(int argc, char* argv[])
