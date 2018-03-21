@@ -1,6 +1,6 @@
 #include "headers/stdafx.hpp"
 
-bool esteCuvantValid(ParserClasses::Parser& myDFA, ParserClasses::State* currState, char* word)
+bool esteCuvantValid(ParserClasses::Parser& myDFA, ParserClasses::State *currState, char* word)
 {
     while(word[0] != '\0') {
         char token[2] = {word[0], '\0'};
@@ -12,31 +12,37 @@ bool esteCuvantValid(ParserClasses::Parser& myDFA, ParserClasses::State* currSta
                     currState,
                     new ParserClasses::Letter(token)
                 );
+                if(currState == nullptr) {
+                    std::cout<<"Nu am putut extrage starea urmatoare pentru: "<<token<<"\n";
+                    return false;
+                }
             } else {
-                std::cout<<"Invalid token!"<<std::endl;
+                std::cout<<"Invalid token! "<<token<<std::endl;
                 return false;
             }
             word = word+1;
             if(myDFA.isFinalState(currState) && strcmp(word, "") == 0) return true;
         }
     }
+    return false;
 }
 
 int main(int argc, char* argv[])
 {
-    std::cout<<"Testez cuvantul..."<<std::endl;
-    if(argc!=2) std::cout<<"Usage: ./tema1 <cuvant>"<<std::endl;
-    else {
-        std::ifstream states("var/states.txt");
-        std::ifstream alphabet("var/alphabet.txt");
-        std::ifstream automat("var/automat.txt");
-        ParserClasses::Parser myParser(states, alphabet);
-        std::cout<<argv[1]<<std::endl;
-        myParser.readAutomata(automat);
-        if(esteCuvantValid(myParser, myParser.getFirstState(), argv[1])){
-            std::cout<<"Cuvant acceptat!\n";
-        }
-        else std::cout<<"Cuvantul nu este acceptat!\n";
+    char word[100];
+    std::cout<<"Introduceti cuvantul de verificat: "; std::cin>>word;
+    std::cout<<"Testez cuvantul... ";
+
+    std::ifstream states("var/states.txt");
+    std::ifstream alphabet("var/alphabet.txt");
+    std::ifstream automat("var/automat.txt");
+    ParserClasses::Parser myParser(states, alphabet);
+    std::cout<<word<<std::endl;
+    myParser.readAutomata(automat);
+    if(esteCuvantValid(myParser, myParser.getFirstState(), word)){
+        std::cout<<"Cuvant acceptat!\n";
     }
+    else std::cout<<"Cuvantul nu este acceptat!\n";
+
     return 0;
 }

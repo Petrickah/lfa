@@ -3,42 +3,41 @@
 void ParserClasses::Parser::initTransMatrix(int nrStates) {
     this->transMatrix = new std::vector<State*> [nrStates + 1];
     for(int i=0; i<=nrStates; i++)
-        this->transMatrix[i] = 
-            std::vector<State*> (
-                this->vAlphabet.size() + 1,
-                new State(-1)
+        this->transMatrix[i] = std::vector<State*> (
+                this->vAlphabet.size() + 1, nullptr
             );
 }
 void ParserClasses::Parser::readStates(std::ifstream& in) {
     char row[250];
 
-    #define readVectorStates(vect) \
+    #define readVectorStates(vect, contor) \
         int k=0; \
         while(row[k] != '{') k++; \
         char* token = strtok(&row[k], "{, }"); \
         while(token != nullptr) \
         { \
             (vect).push_back(State(atoi(token))); \
+            (contor)++; \
             token = strtok(nullptr, "{, }"); \
         } \
 
     while(!in.eof()) {
         in.getline(row, 250);
-        if(row[0] == 'S') {
-            readVectorStates(vStates);
+        if(row[0] == 'Q') {
+            this->nrStates = 0;
+            readVectorStates(vStates, this->nrStates);
         }
-        else if(row[0] == 'Q') {
-            readVectorStates(vFinalStates);
+        else if(row[0] == 'F') {
+            int c= 0;
+            readVectorStates(vFinalStates, c);
         }
         else if(row[0] == 'q') {
             int k=0;
             while(row[k] != '=') k++;
             this->firstState = new State(atoi(&row[k+1]));
         }
-        else {
-            this->nrStates = atoi(row);
-        }
     }
+    std::cout<<this->nrStates<<std::endl;
 }
 void ParserClasses::Parser::readAlphabet(std::ifstream& in) {
     char row[250];
@@ -72,11 +71,10 @@ void ParserClasses::Parser::readAutomata(std::ifstream& in) {
     }
 }
 ParserClasses::State* ParserClasses::Parser::nextState(
-    ParserClasses::State* currState, ParserClasses::Letter* token) 
+    ParserClasses::State* currState, ParserClasses::Letter* token)
 {
     auto currRow = this->transMatrix[currState->getState()];
     int k = this->getIndexOfLetter(token->getLetter());
-    if(currRow[k]->getState() == -1) return nullptr;
     return currRow[k];
 }
 bool ParserClasses::Parser::isFinalState(ParserClasses::State* myState){

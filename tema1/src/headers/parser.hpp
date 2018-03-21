@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <stdlib.h>
 #include <string.h>
 
 namespace ParserClasses {
@@ -28,15 +29,15 @@ namespace ParserClasses {
         int nrStates; State *firstState;
         std::vector<State> vStates, vFinalStates;
         std::vector<Letter*> vAlphabet;
-        
+
         std::vector<State*> *transMatrix;
 
         void initTransMatrix(int nrStates);
         int getIndexOfLetter(char* token);
     public:
         Parser() { this->firstState = new State(); }
-        Parser(int intFirstState, int nrStates) { 
-            this->firstState = new State(intFirstState); 
+        Parser(int intFirstState, int nrStates) {
+            this->firstState = new State(intFirstState);
             this->nrStates = nrStates; initTransMatrix(this->nrStates);
         }
         Parser(State firstState) { this->firstState = new State(firstState); }
