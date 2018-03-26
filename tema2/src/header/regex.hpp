@@ -19,17 +19,30 @@ Wildcards:
 <Token> : Any word in a sentence with one or more characters
 */
 
+#include <iostream>
+#include <cstring>
+#include <vector>
+
 class Token {
     char *string;
 public:
     Token(int nrChars = 0) { string = new char[nrChars]; }
+    Token(char* tok) { string = new char[strlen(tok)]; strcpy(string, tok); }
     ~Token() { delete[] string; }
+
+    friend std::ostream& operator<<(std::ostream&, const Token&);
 };
 
 class Regex {
     char *string;
+    char specialCharacters[6] = "|*+()";
+    std::vector<Token*> tokensList;
 public:
     Regex(int nrChars = 0) { string = new char[nrChars]; }
+    Regex(char* reg) { string = new char[strlen(reg)]; strcpy(string, reg); }
     ~Regex() { delete[] string; }
+
+    bool isSpecialCharacter(char);
+    void extractTokens();
 };
 #endif
