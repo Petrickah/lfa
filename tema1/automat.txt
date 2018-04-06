@@ -1,8 +1,0 @@
-0 1 Ana
-1 4 au
-1 2 are
-2 3 mere
-3 5 si
-5 3 pere
-5 3 prune
-3 0 .
