@@ -23,31 +23,31 @@ namespace ParserClasses {
         State() { nrState = 0; }
         State(int nrState) { this->nrState = nrState; }
         int getState() { return nrState; }
+        void setState(int state) {this->nrState = state;}
     };
 
     class Parser {
-        int nrStates; State *firstState;
+        int nrStates; State firstState;
         std::vector<State> vStates, vFinalStates;
         std::vector<Letter*> vAlphabet;
 
-        std::vector<State*> *transMatrix;
+        std::vector<State> *transMatrix;
 
         void initTransMatrix(int nrStates);
         int getIndexOfLetter(char* token);
     public:
-        Parser() { this->firstState = new State(); }
-        Parser(int intFirstState, int nrStates) {
-            this->firstState = new State(intFirstState);
+        Parser(): firstState() { }
+        Parser(int intFirstState, int nrStates): firstState(intFirstState) {
             this->nrStates = nrStates; initTransMatrix(this->nrStates);
         }
-        Parser(State firstState) { this->firstState = new State(firstState); }
+        Parser(State firstState): firstState(firstState) {}
         Parser(std::ifstream& states, std::ifstream& alphabet) {
             this->readStates(states);
             this->readAlphabet(alphabet);
             initTransMatrix(this->nrStates);
         }
-        ~Parser() { delete firstState; }
-        State* getFirstState() { return firstState; }
+        ~Parser() { }
+        State getFirstState() { return firstState; }
 
         //Metoda specifica starilor
         void readStates(std::ifstream& in);
@@ -56,8 +56,8 @@ namespace ParserClasses {
         //Metoda specifica automatului
         void readAutomata(std::ifstream& in);
 
-        State* nextState(State* currState, Letter* token);
-        bool isFinalState(State* myState);
+        State nextState(State currState, Letter* token);
+        bool isFinalState(State myState);
         bool isValidToken(char* token);
     };
 }
