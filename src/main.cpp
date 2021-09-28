@@ -42,4 +42,5 @@ int main(int argc, char* argv[])
     else std::cout<<"Cuvantul nu este acceptat!";
 
     return 0;
+    
 }
